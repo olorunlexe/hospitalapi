@@ -13,9 +13,9 @@ Download MySQL and setup on machine
 Then execute the following create the database,schema and user
 
 ```MySQL
-CREATE USER "hospital" WITH PASSWORD 'hospital';
-CREATE DATABASE "hospital";
-GRANT ALL PRIVILEGES ON DATABASE "hospital" TO "hospital";
+CREATE USER 'hospital'@'localhost' IDENTIFIED BY 'hospital';
+CREATE DATABASE hospital;
+GRANT ALL PRIVILEGES ON * . * TO 'hospital'@'localhost';
 ```
 
 ## Response Format
