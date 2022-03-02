@@ -1,9 +1,11 @@
 package com.assessment.hospitalapi.entities;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "staffs")
@@ -49,5 +51,11 @@ public class Staff {
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    @PrePersist
+    public void preSave() {
+        if(StringUtils.isEmpty(uuid))
+            uuid = UUID.randomUUID().toString();
     }
 }
