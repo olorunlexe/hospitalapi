@@ -12,6 +12,7 @@ import java.util.Map;
 
 import static com.assessment.hospitalapi.helpers.GenericResponse.genericValidationErrors;
 
+@RequestMapping("api/v1/patient")
 @RestController
 public class PatientController {
     private ManagementService managementService;

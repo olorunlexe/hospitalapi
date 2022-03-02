@@ -6,14 +6,8 @@ import com.assessment.hospitalapi.model.CreateStaffRequest;
 import com.assessment.hospitalapi.model.UpdateStaffRequest;
 import com.assessment.hospitalapi.services.ManagementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +15,7 @@ import java.util.Map;
 
 import static com.assessment.hospitalapi.helpers.GenericResponse.genericValidationErrors;
 
+@RequestMapping("api/v1/staff")
 @RestController
 public class StaffController {
     private ManagementService managementService;
