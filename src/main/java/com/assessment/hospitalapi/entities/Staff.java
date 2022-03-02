@@ -1,4 +1,4 @@
-package entities;
+package com.assessment.hospitalapi.entities;
 
 import org.hibernate.annotations.CreationTimestamp;
 

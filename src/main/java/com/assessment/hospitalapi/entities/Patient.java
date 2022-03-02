@@ -1,6 +1,4 @@
-package entities;
-
-import org.hibernate.annotations.CreationTimestamp;
+package com.assessment.hospitalapi.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
