@@ -10,7 +10,6 @@ import com.assessment.hospitalapi.helpers.MapUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -32,5 +31,25 @@ public class ManagementService {
         staff.setName(name);
         staff = staffRepository.save(staff);
         return GenericResponse.generic200Response("Staff created successfully", new StaffDTO(staff));
+    }
+
+    public GenericResponse updateStaff(Map<String, Object> request) {
+        String uuid = MapUtil.getStringValue(request, "uuid");
+        String updatedName = MapUtil.getStringValue(request, "updatedName");
+        var staff=staffRepository.findByUuid(uuid);
+        if(staff.isEmpty()){
+            throw new CustomApplicationException(HttpStatus.BAD_REQUEST, "Staff record does not exist");
+        }
+        if (staffRepository.existsByName(updatedName)) {
+            throw new CustomApplicationException(HttpStatus.BAD_REQUEST, "This name is not available. Please choose another one");
+        }
+        Staff updatedStaff=staff.get();
+        updatedStaff.setName(updatedName);
+        updatedStaff = staffRepository.save(updatedStaff);
+        return GenericResponse.generic200Response("Staff updated successfully", new StaffDTO(updatedStaff));
+    }
+
+    public GenericResponse fetchAllPatients() {
+        return GenericResponse.generic200Response("Staff updated successfully", patientRepository.findByAgeGreaterThanEqual(2));
     }
 }
