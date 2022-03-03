@@ -39,7 +39,7 @@ public class ManagementService {
     public GenericResponse enrollStaff(Map<String, Object> request) {
         String name = MapUtil.getStringValue(request, "name");
         if (staffRepository.existsByName(name)) {
-            throw new CustomApplicationException(HttpStatus.BAD_REQUEST, "This name is not available. Please choose another one");
+            return GenericResponse.genericErrorResponse(HttpStatus.BAD_REQUEST, "This name is not available. Please choose another one");
         }
         Staff staff = new Staff();
         staff.setName(name);
@@ -52,10 +52,10 @@ public class ManagementService {
         String updatedName = MapUtil.getStringValue(request, "updatedName");
         var staff = staffRepository.findByUuid(uuid);
         if (staff.isEmpty()) {
-            throw new CustomApplicationException(HttpStatus.BAD_REQUEST, "Staff record does not exist");
+            return GenericResponse.genericErrorResponse(HttpStatus.BAD_REQUEST, "Staff record does not exist");
         }
         if (staffRepository.existsByName(updatedName)) {
-            throw new CustomApplicationException(HttpStatus.BAD_REQUEST, "This name is not available. Please choose another one");
+            return GenericResponse.genericErrorResponse(HttpStatus.BAD_REQUEST, "This name is not available. Please choose another one");
         }
         Staff updatedStaff = staff.get();
         updatedStaff.setName(updatedName);

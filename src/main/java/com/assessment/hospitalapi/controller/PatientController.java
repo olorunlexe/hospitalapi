@@ -1,6 +1,5 @@
 package com.assessment.hospitalapi.controller;
 
-import com.assessment.hospitalapi.annotations.AccessValidator;
 import com.assessment.hospitalapi.helpers.GenericResponse;
 import com.assessment.hospitalapi.model.DeletePatientRequest;
 import com.assessment.hospitalapi.services.ManagementService;
@@ -14,10 +13,6 @@ import java.io.IOException;
 
 @RequestMapping("api/v1/patient")
 @RestController
-@ApiImplicitParams({
-        @ApiImplicitParam(name = "uuid", paramType = "header", required = true, dataType = "java.lang.String")
-})
-@AccessValidator
 public class PatientController {
     private ManagementService managementService;
 
@@ -26,12 +21,18 @@ public class PatientController {
     }
 
     @GetMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uuid", paramType = "header", required = true, dataType = "java.lang.String")
+    })
     public ResponseEntity<GenericResponse> fetchPatients() {
         var response = managementService.fetchAllPatients();
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @GetMapping("/fetch-patient-record")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uuid", paramType = "header", required = true, dataType = "java.lang.String")
+    })
     public void fetchPatientRecord(@RequestParam(value = "patientName", required = true) String patientName, HttpServletResponse servletResponse) throws IOException {
         servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition", "attachment; filename=\"patient.csv\"");
@@ -39,6 +40,9 @@ public class PatientController {
     }
 
     @DeleteMapping("/delete-multiple-patient-record")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uuid", paramType = "header", required = true, dataType = "java.lang.String")
+    })
     public GenericResponse deleteMultiplePatientsProfile(@RequestBody DeletePatientRequest request) {
         return managementService.deleteMultiplePatientsProfile(request.getIds(), request.getFrom(), request.getTo());
     }
