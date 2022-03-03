@@ -11,6 +11,7 @@ public class Patient {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(unique=true)
     private String name;
     private int age;
     private LocalDateTime lastVisitDate;

@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,12 +67,18 @@ public class ManagementService {
         return GenericResponse.generic200Response("Staff updated successfully", patientRepository.findByAgeGreaterThanEqual(2));
     }
 
+    public GenericResponse deleteMultiplePatientsProfile(List<Long> id, String from, String to) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        patientRepository.deleteByIdAndLastVisitDateBetween(id, LocalDateTime.parse(from,df), LocalDateTime.parse(to,df));
+        return GenericResponse.genericErrorResponse(HttpStatus.OK, "Records Deleted Successfully");
+    }
+
     public void fetchPatientRecord(String patientName, Writer writer) {
-        var patient= patientRepository.findByName(patientName);
+        var patient = patientRepository.findByName(patientName);
         try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-                csvPrinter.printRecord(patient.getId(), patient.getName(), patient.getAge(), patient.getLastVisitDate());
+            csvPrinter.printRecord(patient.getId(), patient.getName(), patient.getAge(), patient.getLastVisitDate());
         } catch (IOException e) {
-            log.log(Level.SEVERE, "Error While writing CSV ",e);
+            log.log(Level.SEVERE, "Error While writing CSV ", e);
         }
     }
 }

@@ -1,11 +1,14 @@
 package com.assessment.hospitalapi.controller;
 
+import com.assessment.hospitalapi.annotations.AccessValidator;
 import com.assessment.hospitalapi.helpers.GenericResponse;
 import com.assessment.hospitalapi.helpers.MapValidator;
 import com.assessment.hospitalapi.model.CreateStaffRequest;
 import com.assessment.hospitalapi.model.UpdateStaffRequest;
 import com.assessment.hospitalapi.services.ManagementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +44,10 @@ public class StaffController {
     }
 
     @PutMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uuid", paramType = "header", required = true, dataType = "java.lang.String")
+    })
+    @AccessValidator
     public ResponseEntity<GenericResponse> updateStaff(
             @RequestBody UpdateStaffRequest request) {
         Map<String, Object> map = objectMapper.convertValue(request, Map.class);

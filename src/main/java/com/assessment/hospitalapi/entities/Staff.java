@@ -23,6 +23,7 @@ public class Staff {
         return id;
     }
 
+    @Column(unique=true)
     private String name;
     private String uuid;
 

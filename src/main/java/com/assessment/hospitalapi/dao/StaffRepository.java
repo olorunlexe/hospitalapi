@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface StaffRepository extends CrudRepository<Staff, Long> {
     boolean existsByName(String name);
+    boolean existsByUuid(String uuid);
     Optional<Staff> findByUuid(String uuid);
 }

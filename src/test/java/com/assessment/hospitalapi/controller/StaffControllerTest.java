@@ -5,7 +5,6 @@ import com.assessment.hospitalapi.entities.Staff;
 import com.assessment.hospitalapi.helpers.GenericResponse;
 import com.assessment.hospitalapi.model.CreateStaffRequest;
 import com.assessment.hospitalapi.model.UpdateStaffRequest;
-import com.assessment.hospitalapi.services.ManagementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -16,10 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -66,11 +63,11 @@ public class StaffControllerTest {
     @Test
     public void should_return_updated_staff() throws Exception {
         UpdateStaffRequest request = new UpdateStaffRequest();
-        request.setUpdateName("joel1");
+        request.setUpdatedName("joel1");
         request.setUuid("f240fe4b-2846-45f0-8dbf-f44c1fc69d91");
 
         Staff staff = new Staff();
-        staff.setName(request.getUpdateName());
+        staff.setName(request.getUpdatedName());
         staff.setUuid(request.getUuid());
 
         Map<String, Object> map = mapper.convertValue(request, Map.class);
@@ -83,7 +80,7 @@ public class StaffControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.name", Matchers.equalTo(request.getUpdateName())))
+                .andExpect(jsonPath("$.data.name", Matchers.equalTo(request.getUpdatedName())))
                 .andExpect(jsonPath("$.data.uuid", Matchers.equalTo(request.getUuid())));
     }
 

@@ -1,15 +1,15 @@
 package com.assessment.hospitalapi.model;
 
 public class UpdateStaffRequest {
-    private String updateName;
+    private String updatedName;
     private String uuid;
 
-    public String getUpdateName() {
-        return updateName;
+    public String getUpdatedName() {
+        return updatedName;
     }
 
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
     }
 
     public String getUuid() {
