@@ -18,6 +18,10 @@ CREATE DATABASE hospital;
 GRANT ALL PRIVILEGES ON * . * TO 'hospital'@'localhost';
 ```
 
+on first load make sure ```spring.datasource.initialization-mode=always```  is configured, 
+
+there after use: ```spring.datasource.initialization-mode=never```
+
 ## Response Format
 
 ### Successful response format
