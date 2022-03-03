@@ -14,8 +14,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.RequestDispatcher;
@@ -28,7 +26,6 @@ import static com.assessment.hospitalapi.helpers.GenericResponse.*;
 
 
 @RestControllerAdvice
-@RestController
 public class GlobalExceptionHandler implements ErrorController {
 
     private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -39,7 +36,7 @@ public class GlobalExceptionHandler implements ErrorController {
 
     @ExceptionHandler(CustomApplicationException.class)
     public ResponseEntity<GenericResponse> handleThrowable(CustomApplicationException e) {
-        return ResponseEntity.status(e.getHttpStatus()).body(genericErrorResponse(e.getHttpStatus(), e.getMessage(), e.getErrors(), e.getData())) ;
+        return ResponseEntity.status(e.getHttpStatus()).body(genericErrorResponse(e.getHttpStatus(), e.getMessage(), e.getErrors(), e.getData()));
     }
 
     @ExceptionHandler({Exception.class})
@@ -69,13 +66,6 @@ public class GlobalExceptionHandler implements ErrorController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(generic400BadRequest((split == null || split.length == 0) ? errorMessage : split[0]));
     }
 
-    @RequestMapping("/error")
-    public ResponseEntity<GenericResponse> handleError(HttpServletRequest request, HttpServletResponse response) {
-        HttpStatus httpStatus = getHttpStatus(request);
-        String message = getErrorMessage(request, httpStatus);
-        return ResponseEntity.status(httpStatus).body(genericErrorResponse(httpStatus, message));
-    }
-
     private HttpStatus getHttpStatus(HttpServletRequest request) {
 
         String code = request.getParameter("code");
@@ -92,7 +82,7 @@ public class GlobalExceptionHandler implements ErrorController {
 
     private String getErrorMessage(HttpServletRequest request, HttpStatus httpStatus) {
         String message = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-        if(message != null && !message.isEmpty()) return message;
+        if (message != null && !message.isEmpty()) return message;
 
         message = switch (httpStatus) {
             case NOT_FOUND -> "The resource does not exist";

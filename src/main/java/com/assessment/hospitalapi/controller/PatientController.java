@@ -6,6 +6,8 @@ import com.assessment.hospitalapi.services.ManagementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +30,9 @@ public class PatientController {
     }
 
     @GetMapping("/fetch-patient-record")
-    public ResponseEntity<GenericResponse> fetchPatientRecord() {
-        var response = managementService.fetchAllPatients();
-        return ResponseEntity.status(response.getCode()).body(response);
+    public void fetchPatientRecord(@RequestParam(value = "patientName", required = true) String patientName, HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"patient.csv\"");
+        managementService.fetchPatientRecord(patientName,servletResponse.getWriter());
     }
 }

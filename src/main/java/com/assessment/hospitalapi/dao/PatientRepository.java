@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PatientRepository extends CrudRepository<Patient, Long> {
     List<Patient> findByAgeGreaterThanEqual(int age);
+    Patient findByName(String name);
 }
